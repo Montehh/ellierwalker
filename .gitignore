@@ -1,0 +1,6 @@
+/testing
+/archive
+
+*.DS_Store
+*.idea/
+Thumbs.db
