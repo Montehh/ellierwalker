@@ -51,47 +51,46 @@
       plugins: [],
     }
   </script>
-    <style>
-      /* Apply a full-page background image */
-      body {
-          margin: 0;
-          height: 100vh; /* Full height */
-          background-image: url('images/IMG_0536.jpg');
-          background-size: cover; /* Scale the image to cover the entire page */
-          background-position: center; /* Center the image */
-          background-repeat: no-repeat; /* Prevent the image from repeating */
-      }
-      footer {
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        bottom: 0;
-      }
-      @media (max-width: 600px) {
-      #name-title {
-        font-size: medium;
-      }
-
-      #nav {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-      #ul-item {
-        font-size: small;
-      }
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-image: url('images/IMG_0536.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    footer {
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+    }
+    @media (max-width: 600px) {
+    #name-title {
+      font-size: medium;
+    }
+    #nav {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    #ul-item {
+      font-size: small;
+    }
+  }
   </style>
 </head>
 
 <body
-  class="h-screen text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500" style="padding: 0px">
+  class="h-screen text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500" style="padding:0px">
   <!-- Navbar -->
   <header class="flex w-full overflow-hidden pt-10 pb-1">
     <!-- Navbar -->
     <nav id="nav" x-data="{ open: false }" role="navigation" class="w-full">
       <div class="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
-          <a href="index.html" class="font-signika text-2xl text-white">ELLIE WALKER</a>
+          <a href="index.html" id="name-title" class="font-signika text-2xl text-white">ELLIE WALKER</a>
         </div>
         <div class="ml-auto md:hidden flex items-center justify-start">
           <button onclick="menuToggle()" @click="open = !open"
@@ -116,17 +115,17 @@
           <ul id="ulMenu"
             class="flex flex-col duration-300 ease-out md:space-x-5 sm:transition-none mt-5 md:flex-row md:items-center md:ml-auto md:mt-0 md:pt-0 md:border-0">
             <li class="group transition duration-300">
-              <a href="selectedpaintings.html" class="font-signika text-base tap-highlight-transparent text-white">SELECTED PAINTINGS
+              <a id="ul-item" href="selectedpaintings.html" class="font-signika text-base tap-highlight-transparent text-white">SELECTED PAINTINGS
                 <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-white dark:bg-white"></span>
               </a>
             </li>
             <li class="group transition duration-300">
-              <a href="worksonpaper.html" class="font-signika text-base tap-highlight-transparen text-white">WORKS ON PAPER
+              <a id="ul-item" href="worksonpaper.html" class="font-signika text-base tap-highlight-transparen text-white">WORKS ON PAPER
                 <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
               </a>
             </li>
             <li class="group transition duration-300">
-              <a href="about.html" class="font-signika text-base tap-highlight-transparent text-white">ABOUT
+              <a id="ul-item" href="about.html" class="font-signika text-base tap-highlight-transparent text-white">ABOUT
                 <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
               </a>
             </li>
@@ -155,7 +154,7 @@
           </div>
         </div>
       </div>
-      <p class="mt-8 text-xs text-gray-600 dark:text-gray-300 text-center">
+      <p class="mt-8 text-xs text-gray-600 dark:text-white text-center">
         Copyright © Ellie Walker<br/>Created by Ross Montgomery
       </p>
     </div>
