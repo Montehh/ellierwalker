@@ -5,15 +5,17 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ellie Walker - Paintings</title>
-  <meta name="description"
-    content="Test.">
+  <title>Ellie Walker</title>
+  <meta name="description" content="Portfolio">
+
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="content/logo.png" />
+  <link rel="icon" type="image/x-icon" href="images/IMG_0536.jpg" />
   <link rel="stylesheet" href="style/output.css" />
-  <link rel="stylesheet" href="styles.css" />
+  <!-- <link rel="stylesheet" href="styles.css" /> -->
+
   <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   <!-- Start - Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,34 +25,15 @@
   <!-- Start - Fancybox Scripts -->
   <!-- Fancybox CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-
   <!-- Carousel CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/carousel.css" />
-
   <!-- Fancybox and Carousel JS -->
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/carousel.umd.js"></script>
-
-  
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <!-- End - Fancybox Scripts -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      content: ["./dist/*.{html,js}"],
-      theme: {
-        extend:
-                {
-                  fontFamily: {
-                    'nothingyoucoulddo': ['Nothing You Could Do', 'cursive'],
-                    'signika': ['Signika', 'sans-serif'],
-                  },
-                },
-      },
-      plugins: [],
-    }
-  </script>
+
   <style>
     #myCarouselContainer {
       display: flex;
@@ -59,47 +42,34 @@
       overflow: visible;
     }
     #myCarouselContainer .carousel {
-      /* --f-carousel-slide-width: calc(94% / 2);
-      --f-carousel-spacing: 0;
-
-      --f-button-next-pos: 30px;
-      --f-button-prev-pos: 30px;
-
-      --f-button-width: 44px;
-      --f-button-height: 44px;
-      --f-button-border-radius: 50%;
-
-      --f-button-color: #fff;
-      --f-button-hover-color: #fff;
-      --f-button-active-color: #fff;
-
-      --f-button-bg: rgba(0, 0, 0, 0.5);
-      --f-button-hover-bg: rgba(0, 0, 0, 0.8);
-      --f-button-active-bg: rgba(0, 0, 0, 0.8);
-
-      --f-button-svg-width: 22px;
-      --f-button-svg-height: 22px;
-      --f-button-svg-stroke-width: 3; */
-      overflow: visible;
       width: 100%;
       height: auto;
       align-items: center;
     }
     #myCarouselContainer .carousel__slide {
-      /* display: flex; */
-      /* align-items: center; */
-      /* height: auto; */
       width: auto;
       justify-content: center;
-      overflow: visible;
+      /* overflow: visible; */
       align-items: center;
     }
     #myCarouselContainer  img {
       justify-content: center;
       align-items: center;
-      overflow: visible;
+      /* overflow: visible; */
       height: 650px;
     }
+    .carousel__button {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: 50;
+      --carousel-button-bg: #cabebeab;
+      --carousel-button-color: #0000009a;
+      --carousel-button-svg-stroke-width: 2.5;
+      --carousel-button-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 330, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        }
     @media (max-width: 600px) {
       #name-title {
         font-size: medium;
@@ -115,7 +85,7 @@
       #myCarouselContainer  img {
         justify-content: center;
         align-items: center;
-        overflow: visible;
+        /* overflow: visible; */
         height: 300px;
       }
     }
@@ -130,7 +100,7 @@
     <nav id="nav" x-data="{ open: false }" role="navigation" class="w-full">
       <div class="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
-          <a href="index.html" id="name-title" class="font-signika text-2xl">ELLIE WALKER</a>
+          <a href="index.html" id="name-title" class="text-2xl">ELLIE WALKER</a>
         </div>
         <div class="ml-auto md:hidden flex items-center justify-start">
           <button onclick="menuToggle()" @click="open = !open"
@@ -155,18 +125,18 @@
           <ul id="ulMenu"
             class="flex flex-col duration-300 ease-out md:space-x-5 sm:transition-none mt-5 md:flex-row md:items-center md:ml-auto md:mt-0 md:pt-0 md:border-0">
             <li class="group transition duration-300">
-              <a id="ul-item" href="selectedpaintings.html" class="font-signika text-base tap-highlight-transparent">SELECTED PAINTINGS
-                <span class="hidden md:block h-0.5 bg-white dark:bg-black"></span>
+              <a id="ul-item" href="selectedpaintings.html" class="text-base tap-highlight-transparent">SELECTED PAINTINGS
+                <span class="hidden md:block h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
             <li class="group transition duration-300">
-              <a id="ul-item" href="worksonpaper.html" class="font-signika text-base tap-highlight-transparent">WORKS ON PAPER
-                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
+              <a id="ul-item" href="worksonpaper.html" class="text-base tap-highlight-transparent">WORKS ON PAPER
+                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
             <li class="group transition duration-300">
-              <a id="ul-item" href="about.html" class="font-signika text-base tap-highlight-transparent">ABOUT
-                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
+              <a id="ul-item" href="about.html" class="text-base tap-highlight-transparent">ABOUT
+                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
           </ul>
@@ -175,7 +145,7 @@
     </nav>
   </header>
   <!-- Content -->
-  <div class="display: flex; justify-content: center;" width="100%">
+  <div class="display: flex; justify-content: center;" height="100vh" width="100%">
     <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
     <section class="mycontainer">
       <div class="my-carousel-container" id="myCarouselContainer">
@@ -210,22 +180,18 @@
     </section>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script>    
-      // Initialize Carousel
       const carousel = new Carousel(document.querySelector('.carousel'), {
         slidesPerPage: 1,
         infinite: true,
         adaptiveHeight: true,
       });
-    
-      // Initialize Fancybox (optional: further configurations)
       Fancybox.bind('[data-fancybox="gallery"]', {
-        // Add any Fancybox options here
       });
     </script>
   </div>
   <!-- Footer -->
-  <footer>
-    <div class="max-w-screen-xl py-16 mx-auto">
+  <footer style="padding-top: 50px">
+    <div class="max-w-screen-xl py-16 mx-auto align-items-bottom">
       <div class="grid grid-cols-1 gap-8 text-center mx-auto">
         <div>
           <div class="flex mx-auto">
