@@ -61,8 +61,24 @@
           background-position: center; /* Center the image */
           background-repeat: no-repeat; /* Prevent the image from repeating */
       }
-      #index-bgimage-container {
-          min-height: 100%;
+      footer {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+      }
+      @media (max-width: 600px) {
+      #name-title {
+        font-size: medium;
+      }
+
+      #nav {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      #ul-item {
+        font-size: small;
       }
   </style>
 </head>
@@ -79,7 +95,7 @@
         </div>
         <div class="ml-auto md:hidden flex items-center justify-start">
           <button onclick="menuToggle()" @click="open = !open"
-            class="tap-highlight-transparent text-black dark:text-black w-5 h-5 relative focus:outline-none"
+            class="tap-highlight-transparent text-white dark:text-white w-5 h-5 relative focus:outline-none"
             @click="open = !open">
             <span class="sr-only">Open main menu</span>
             <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -120,9 +136,6 @@
     </nav>
   </header>
   <!-- Content -->
-  <div class="display: flex; justify-content: center;" width="100%" id="index-bgimage-container">
-    <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
-  </div>
   <!-- Footer -->
   <footer>
     <div class="max-w-screen-xl py-16 mx-auto">
