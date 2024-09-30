@@ -11,7 +11,6 @@
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="images/IMG_0536.jpg" />
   <link rel="stylesheet" href="style/output.css" />
-  <!-- <link rel="stylesheet" href="styles.css" /> -->
 
   <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -47,14 +46,17 @@
         font-size: small;
       }
     }
+    @media (min-width: 768px){
+      #page-title {
+        display: none;
+      }
+    }
   </style>
 </head>
 
 <body
   class="h-screen text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500" style="padding:0px">
-  <!-- Navbar -->
   <header class="flex w-full overflow-hidden pt-10 pb-1">
-    <!-- Navbar -->
     <nav id="nav" x-data="{ open: false }" role="navigation" class="w-full">
       <div class="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
@@ -64,7 +66,7 @@
           <button onclick="menuToggle()" @click="open = !open"
             class="tap-highlight-transparent text-black dark:text-black w-5 h-5 relative focus:outline-none"
             @click="open = !open">
-            <span class="sr-only">Open main menu</span>
+            <span class="sr-only"></span>
             <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <span aria-hidden="true"
                 class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
@@ -102,8 +104,10 @@
       </div>
     </nav>
   </header>
+  <h1 id="page-title" class="text-xs" style="padding-left: 20px;">ABOUT</h1>
+  <div class="mr-4 md:mr-8">
+    <a class="flex justify-center text-base">Coming soon...</a>
   </div>
-  <!-- Footer -->
   <footer style="padding-top: 50px">
     <div class="max-w-screen-xl py-16 mx-auto align-items-bottom">
       <div class="grid grid-cols-1 gap-8 text-center mx-auto">
@@ -127,7 +131,6 @@
       </p>
     </div>
   </footer>
-  <!-- Script for the LightBox -->
   <script src="style/fade_in.js"></script>
   <script src="style/menu.js"></script>
 </body>
