@@ -11,7 +11,6 @@
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="images/IMG_0536.jpg" />
   <link rel="stylesheet" href="style/output.css" />
-  <!-- <link rel="stylesheet" href="styles.css" /> -->
 
   <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -44,19 +43,20 @@
     #myCarouselContainer .carousel {
       width: 100%;
       height: auto;
+      justify-content: center;
       align-items: center;
     }
     #myCarouselContainer .carousel__slide {
-      width: auto;
-      justify-content: center;
-      /* overflow: visible; */
-      align-items: center;
+      width: calc(100% / 3);;
+      text-align: center;
+      align-content: center;
     }
     #myCarouselContainer  img {
+      vertical-align: top;
       justify-content: center;
       align-items: center;
-      /* overflow: visible; */
-      height: 650px;
+      height: auto;
+      max-height: 625px;
     }
     .carousel__button {
       width: 48px;
@@ -74,7 +74,6 @@
       #name-title {
         font-size: medium;
       }
-
       #nav {
         padding-left: 20px;
         padding-right: 20px;
@@ -82,11 +81,18 @@
       #ul-item {
         font-size: small;
       }
+      #myCarouselContainer .carousel__slide {
+        width: calc(100% / 1);;
+      }
       #myCarouselContainer  img {
         justify-content: center;
         align-items: center;
-        /* overflow: visible; */
         height: 300px;
+      }
+    }
+    @media (min-width: 768px){
+      #page-title {
+        display: none;
       }
     }
   </style>
@@ -94,9 +100,7 @@
 
 <body
   class="h-screen text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500" style="padding:0px">
-  <!-- Navbar -->
   <header class="flex w-full overflow-hidden pt-10 pb-1">
-    <!-- Navbar -->
     <nav id="nav" x-data="{ open: false }" role="navigation" class="w-full">
       <div class="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
@@ -106,7 +110,7 @@
           <button onclick="menuToggle()" @click="open = !open"
             class="tap-highlight-transparent text-black dark:text-black w-5 h-5 relative focus:outline-none"
             @click="open = !open">
-            <span class="sr-only">Open main menu</span>
+            <span class="sr-only"></span>
             <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <span aria-hidden="true"
                 class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
@@ -144,52 +148,15 @@
       </div>
     </nav>
   </header>
-  <!-- Content -->
   <div class="display: flex; justify-content: center;" height="100vh" width="100%">
-    <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
+    <h1 id="page-title" class="text-xs" style="padding-left: 20px;">SELECTED PAINTINGS</h1>
     <section class="mycontainer">
       <div class="my-carousel-container" id="myCarouselContainer">
         <div class="carousel">            
-          <div class="carousel__slide">
-            <a class="flex flex-wrap justify-center" href="images/IMG_8235.jpg" data-fancybox="gallery">
-              <img class="" src="images/IMG_8235.jpg" alt="Image 2" />
-            </a>
-          </div>
-          <div class="carousel__slide">
-            <a class="flex flex-wrap justify-center" href="images/IMG_8310.jpg" data-fancybox="gallery">
-              <img class="" src="images/IMG_8310.jpg" alt="Image 3" />
-            </a>
-          </div>
-          <div class="carousel__slide">
-            <a class="flex flex-wrap justify-center" href="images/moon.jpg" data-fancybox="gallery">
-              <img class="" src="images/moon.jpg" alt="Image 3" />
-            </a>
-          </div>
-          <div class="carousel__slide">
-            <a class="flex flex-wrap justify-center" href="images/Walker_01_01_Risking Nothing.jpg" data-fancybox="gallery">
-              <img class="" src="images/Walker_01_01_Risking Nothing.jpg" alt="Image 3" />
-            </a>
-          </div>
-          <div class="carousel__slide">
-            <a class="flex flex-wrap justify-center" href="images/Walker_04_01_Train tracks.jpg" data-fancybox="gallery">
-              <img class="" src="images/Walker_04_01_Train tracks.jpg" alt="Image 3" />
-            </a>
-          </div>
         </div>              
       </div>
     </section>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-    <script>    
-      const carousel = new Carousel(document.querySelector('.carousel'), {
-        slidesPerPage: 1,
-        infinite: true,
-        adaptiveHeight: true,
-      });
-      Fancybox.bind('[data-fancybox="gallery"]', {
-      });
-    </script>
   </div>
-  <!-- Footer -->
   <footer style="padding-top: 50px">
     <div class="max-w-screen-xl py-16 mx-auto align-items-bottom">
       <div class="grid grid-cols-1 gap-8 text-center mx-auto">
@@ -213,7 +180,56 @@
       </p>
     </div>
   </footer>
-  <!-- Script for the LightBox -->
+  <script>
+    const API_KEY = 'AIzaSyA6_KkOsKxkYsE23M2xOhfghpApQV4pojI';
+    const FOLDER_ID = '1xLfph_Brc55Beoh7N61x4H9NSwfF0Htq';
+
+    async function fetchImagesFromGoogleDrive() {
+      const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description,createdTime)`;
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      return data.files
+        .filter(file => file.mimeType.startsWith('image/'))
+        ; 
+    }
+    function generateGallery(images) {
+      const galleryContainer = document.querySelector('.carousel');
+      images.forEach(image => {
+        const imageURL = `https://lh3.googleusercontent.com/d/${image.id}`;
+        const description = image.description ? image.description : '';
+        const formattedDescription = description ? description.replace(/,/g, '<br>') : '';
+        const imageTemplate = `
+          <div class="carousel__slide">
+            <a class="flex flex-wrap justify-center text-align-center content-center" href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
+              <img src="${imageURL}" alt="${image.name}"/>
+            </a>
+            <div class="carousel__caption">${formattedDescription}</div>
+          </div>`;
+        galleryContainer.innerHTML += imageTemplate;
+      });
+      const carousel = new Carousel(document.querySelector('.carousel'), {
+        initialSlide: 2,
+        slidesPerPage: 1,
+        infinite: true,
+        adaptiveHeight: true,
+      });
+      Fancybox.bind('[data-fancybox="gallery"]', {
+      });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchImagesFromGoogleDrive().then(images => {
+        generateGallery(images);
+      });
+    });
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        document.querySelector('.carousel').innerHTML = '';
+        fetchImagesFromGoogleDrive().then(images => {
+          generateGallery(images);
+        });
+      }
+    });
+  </script>
   <script src="style/fade_in.js"></script>
   <script src="style/menu.js"></script>
 </body>
