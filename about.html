@@ -34,7 +34,42 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    @media (max-width: 600px) {
+    .btn {
+      border: none;
+      background-color: #eee;
+      padding: 14px 28px;
+      cursor: pointer;
+      border-radius: 15px;
+    }
+    .btn:hover {background: #c2b6b6;}
+    .default {color: black;}
+
+    .about-content {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+    .about-container {
+      display: flex;
+      width: 90%;
+      justify-content: center;
+    }
+    .about-item {
+      display: flex;
+      width: 100%;
+      height: 75vh;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      padding-left: 2.5%;
+      padding-right: 2.5%;
+    }
+    .about-item img {
+      display: flex;
+      max-height: 90%;
+      width: auto;
+    }
+    @media (max-width: 767px) {
       #name-title {
         font-size: medium;
       }
@@ -44,6 +79,15 @@
       }
       #ul-item {
         font-size: small;
+      }
+      .about-container {
+        display: block;
+        width: 90%; 
+      }
+      .about-item {
+        padding-top: 0;
+        padding-bottom: 10%;
+        height: auto;
       }
     }
     @media (min-width: 768px){
@@ -105,9 +149,29 @@
     </nav>
   </header>
   <h1 id="page-title" class="text-xs" style="padding-left: 20px;">ABOUT</h1>
-  <div class="mr-4 md:mr-8">
-    <a class="flex justify-center text-base">Coming soon...</a>
+  <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
+  <div class="about-content">
+    <div class="about-container">
+      <div class="about-item">
+        <p>
+          Currently living in London and studying for my MA in Fine Art at City&Guilds of London Art School ‘25.
+          <br/><br/>
+          I am interested in making ambiguous scenes, settings and having figurative elements forming in my work through the exploration of materiality, seeing what happens when I take risks, being spontaneous and listening to my intuition when responding to colour and mark making.
+          <br/><br/>
+          I approach my work with no concrete idea of what it will become however, I work from multiple drawings which come from many ways of working such as drawing from a photograph of mine or someone else’s, using stencils cut out from newspapers and magazines, my imagination, my dreams or drawing from life. Through drawing and painting, I am able to express my anxious feelings by translating them into an enigmatic world, delivered through a cathartic process.
+          <br/><br/>
+          <br/><br/>
+          <button class="btn default text-2xl"><a href="cv.pdf">CV</a></button>
+          <br/><br/>
+          
+        </p>
+      </div>
+      <div class="about-item">  
+          <img src="images/avatar.jpg" alt="Avatar_image">
+      </div>
+    </div>
   </div>
+</div>
   <footer style="padding-top: 50px">
     <div class="max-w-screen-xl py-16 mx-auto align-items-bottom">
       <div class="grid grid-cols-1 gap-8 text-center mx-auto">
