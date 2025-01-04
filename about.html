@@ -152,21 +152,11 @@
   <div class="about-content">
     <div class="about-container">
       <div class="about-item">
-        <p>
-          Currently living in London and studying for my MA in Fine Art at City&Guilds of London Art School ‘25.
-          <br/><br/>
-          I am interested in making ambiguous scenes, settings and having figurative elements forming in my work through the exploration of materiality, seeing what happens when I take risks, being spontaneous and listening to my intuition when responding to colour and mark making.
-          <br/><br/>
-          I approach my work with no concrete idea of what it will become however, I work from multiple drawings which come from many ways of working such as drawing from a photograph of mine or someone else’s, using stencils cut out from newspapers and magazines, my imagination, my dreams or drawing from life. Through drawing and painting, I am able to express my anxious feelings by translating them into an enigmatic world, delivered through a cathartic process.
-          <br/><br/>
-          <br/><br/>
-          <button class="btn default text-base"><a href="cv.pdf">CV</a></button>
-          <br/><br/>
-          
+        <p id="avatar-description">
         </p>
       </div>
       <div class="about-item">  
-          <img src="images/avatar.jpg" alt="Avatar_image">
+        <img id="avatar-image" alt="Avatar Image" />
       </div>
     </div>
   </div>
@@ -194,6 +184,42 @@
       </p>
     </div>
   </footer>
+  <script>
+    const API_KEY = 'AIzaSyA6_KkOsKxkYsE23M2xOhfghpApQV4pojI';
+    const FOLDER_ID = '1-WiMoYxr4_vjMWfgdP5IfcuQDmtuaJP2';
+  
+    async function fetchAvatarImage() {
+      try {
+        const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description)`;
+        const response = await fetch(endpoint);
+        const data = await response.json();
+  
+        const avatar = data.files.find(file => file.name === 'Avatar.jpg');
+        const cv = data.files.find(file => file.name === 'cv.pdf');
+
+        if (avatar) {
+          const imageUrl = `https://lh3.googleusercontent.com/d/${avatar.id}`;
+          const description = avatar.description || 'No description available';
+          
+          document.getElementById('avatar-image').src = imageUrl;
+          const descriptionElement = document.getElementById('avatar-description');
+          descriptionElement.innerHTML = description.replace(/\//g, '<br>');
+        } else {
+          console.error('Avatar image not found in the folder.');
+        }
+        if (cv) {
+          const cvUrl = `https://drive.google.com/uc?id=${cv.id}&export=download`;
+          const buttonHTML = `<br/><br/><br/><br/><button class="btn default text-base"><a href="${cvUrl}" target="_blank" rel="noopener noreferrer">CV</a></button><br/><br/>`;
+          document.getElementById('avatar-description').insertAdjacentHTML('beforeend', buttonHTML);
+        } else {
+          console.error('CV file not found in the folder.');
+        }
+      } catch (error) {
+        console.error('Error fetching avatar image:', error);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', fetchAvatarImage);
+  </script>
   <script src="style/fade_in.js"></script>
   <script src="style/menu.js"></script>
 </body>
