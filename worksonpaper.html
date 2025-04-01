@@ -152,7 +152,7 @@
         </div>
       </div>
       <p class="mt-8 text-xs text-gray-600 dark:text-gray-300 text-center">
-        Copyright © Ellie Walker<br/>Created by Ross Montgomery
+        Copyright © Ellie Walker<br/>
       </p>
     </div>
   </footer>
@@ -161,30 +161,49 @@
     const FOLDER_ID = '13ljk70oobmJWcWp552hZU4jam1vfW-MZ';
 
     async function fetchImagesFromGoogleDrive() {
-      const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description,createdTime)`;
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      return data.files
-        .filter(file => file.mimeType.startsWith('image/'))
-        ;
-    }
-    function generateGallery(images) {
-      const galleryContainer = document.querySelector('.gallery');
-      images.forEach(image => {
-        const imageURL = `https://lh3.googleusercontent.com/d/${image.id}`;
-        const description = image.description || image.name;
-        const formattedDescription = description.replace(/,/g, '<br>');
-        const imageTemplate = `
-          <div class="gallery__item">
-            <a href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
-              <img src="${imageURL}" alt="${description}" />
-            </a>
-          </div>`;
-        galleryContainer.innerHTML += imageTemplate;
-      });
-      Fancybox.bind('[data-fancybox="gallery"]', {
-      });
-    }
+            const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description,createdTime)`;
+            const response = await fetch(endpoint);
+            const data = await response.json();
+
+            return data.files
+                .filter(file => file.mimeType.startsWith('image/'))
+                .sort((a, b) => {
+                    const numA = parseInt(a.name.match(/\d+/)?.[0] || "0", 10);
+                    const numB = parseInt(b.name.match(/\d+/)?.[0] || "0", 10);
+                    return numB - numA; 
+                });
+        }
+
+        function generateGallery(images) {
+            const galleryContainer = document.querySelector('.gallery');
+            galleryContainer.innerHTML = "";
+
+            images.forEach(image => {
+                const imageURL = `https://lh3.googleusercontent.com/d/${image.id}`;
+                const description = image.description || "";
+                const formattedDescription = description.replace(/,/g, '<br>');
+                const imageTemplate = `
+                    <div class="gallery__item">
+                        <a href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
+                            <img src="${imageURL}" alt="${description}" />
+                        </a>
+                    </div>`;
+                galleryContainer.innerHTML += imageTemplate;
+            });
+            Fancybox.bind('[data-fancybox="gallery"]', {
+                Toolbar: {
+                    display: ["close"],
+                },
+                Thumbs: {
+                  autoStart: false,
+                },
+            });
+        }
+
+        async function initGallery() {
+            const images = await fetchImagesFromGoogleDrive();
+            generateGallery(images);
+        }
     document.addEventListener('DOMContentLoaded', function() {
       fetchImagesFromGoogleDrive().then(images => {
         generateGallery(images);
