@@ -34,40 +34,42 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    .btn {
-      border: none;
-      background-color: #eeeeee00;
-      padding: 14px 28px;
-      cursor: pointer;
-      border-radius: 15px;
-    }
-    .btn:hover {background: #eee;}
-    .default {color: black;}
-    .about-content {
+    #myCarouselContainer {
       display: flex;
-      width: 100%;
       justify-content: center;
-    }
-    .about-container {
-      display: flex;
-      width: 90%;
-      justify-content: center;
-    }
-    .about-item {
-      display: flex;
-      width: 100%;
-      height: 75vh;
-      text-align: center;
       align-items: center;
+      overflow: visible;
+    }
+    #myCarouselContainer .carousel {
+      width: 100%;
+      height: auto;
       justify-content: center;
-      padding-left: 2.5%;
-      padding-right: 2.5%;
+      align-items: center;
     }
-    .about-item img {
-      display: flex;
-      max-height: 90%;
-      width: auto;
+    #myCarouselContainer .carousel__slide {
+      width: calc(100% / 3);;
+      text-align: center;
+      align-content: center;
     }
+    #myCarouselContainer  img {
+      vertical-align: top;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      max-height: 625px;
+    }
+    .carousel__button {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: 50;
+      --carousel-button-bg: #cabebeab;
+      --carousel-button-color: #0000009a;
+      --carousel-button-svg-stroke-width: 2.5;
+      --carousel-button-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 330, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        }
     @media (max-width: 767px) {
       #name-title {
         font-size: medium;
@@ -79,14 +81,13 @@
       #ul-item {
         font-size: small;
       }
-      .about-container {
-        display: block;
-        width: 90%; 
+      #myCarouselContainer .carousel__slide {
+        width: calc(100% / 1);;
       }
-      .about-item {
-        padding-top: 0;
-        padding-bottom: 15%;
-        height: auto;
+      #myCarouselContainer  img {
+        justify-content: center;
+        align-items: center;
+        height: 300px;
       }
     }
     @media (min-width: 768px){
@@ -129,7 +130,7 @@
             class="flex flex-col duration-300 ease-out md:space-x-5 sm:transition-none mt-5 md:flex-row md:items-center md:ml-auto md:mt-0 md:pt-0 md:border-0">
             <li class="group transition duration-300">
               <a id="ul-item" href="selectedpaintings.html" class="text-base tap-highlight-transparent">SELECTED PAINTINGS
-                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>                
+                <span class="hidden md:block h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
             <li class="group transition duration-300">
@@ -139,7 +140,7 @@
             </li>
             <li class="group transition duration-300">
               <a id="ul-item" href="about.html" class="text-base tap-highlight-transparent">ABOUT
-                <span class="hidden md:block h-0.5 bg-black dark:bg-black"></span>
+                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
           </ul>
@@ -147,20 +148,15 @@
       </div>
     </nav>
   </header>
-  <h1 id="page-title" class="text-xs" style="padding-left: 20px;">ABOUT</h1>
-  <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
-  <div class="about-content">
-    <div class="about-container">
-      <div class="about-item">
-        <p id="avatar-description">
-        </p>
+  <div class="display: flex; justify-content: center;" height="100vh" width="100%">
+    <h1 id="page-title" class="text-xs" style="padding-left: 20px;">SELECTED PAINTINGS</h1>
+    <section class="mycontainer">
+      <div class="my-carousel-container" id="myCarouselContainer">
+        <div class="carousel">            
+        </div>              
       </div>
-      <div class="about-item">  
-        <img id="avatar-image" alt="Avatar Image" />
-      </div>
-    </div>
+    </section>
   </div>
-</div>
   <footer style="padding-top: 50px">
     <div class="max-w-screen-xl py-16 mx-auto align-items-bottom">
       <div class="grid grid-cols-1 gap-8 text-center mx-auto">
@@ -180,45 +176,59 @@
         </div>
       </div>
       <p class="mt-8 text-xs text-gray-600 dark:text-gray-300 text-center">
-        Copyright © Ellie Walker<br/>
+        Copyright © Ellie Walker<br/>Created by Ross Montgomery
       </p>
     </div>
   </footer>
   <script>
     const API_KEY = 'AIzaSyA6_KkOsKxkYsE23M2xOhfghpApQV4pojI';
-    const FOLDER_ID = '1-WiMoYxr4_vjMWfgdP5IfcuQDmtuaJP2';
-  
-    async function fetchAvatarImage() {
-      try {
-        const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description)`;
-        const response = await fetch(endpoint);
-        const data = await response.json();
-  
-        const avatar = data.files.find(file => file.name === 'Avatar.jpg');
-        const cv = data.files.find(file => file.name === 'cv.pdf');
+    const FOLDER_ID = '1xLfph_Brc55Beoh7N61x4H9NSwfF0Htq';
 
-        if (avatar) {
-          const imageUrl = `https://lh3.googleusercontent.com/d/${avatar.id}`;
-          const description = avatar.description || 'No description available';
-          
-          document.getElementById('avatar-image').src = imageUrl;
-          const descriptionElement = document.getElementById('avatar-description');
-          descriptionElement.innerHTML = description.replace(/\//g, '<br>');
-        } else {
-          console.error('Avatar image not found in the folder.');
-        }
-        if (cv) {
-          const cvUrl = `https://drive.google.com/uc?id=${cv.id}&export=download`;
-          const buttonHTML = `<br/><br/><br/><br/><button class="btn default text-base"><a href="${cvUrl}" target="_blank" rel="noopener noreferrer">CV</a></button><br/><br/>`;
-          document.getElementById('avatar-description').insertAdjacentHTML('beforeend', buttonHTML);
-        } else {
-          console.error('CV file not found in the folder.');
-        }
-      } catch (error) {
-        console.error('Error fetching avatar image:', error);
-      }
+    async function fetchImagesFromGoogleDrive() {
+      const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description,createdTime)`;
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      return data.files
+        .filter(file => file.mimeType.startsWith('image/'))
+        ; 
     }
-    document.addEventListener('DOMContentLoaded', fetchAvatarImage);
+    function generateGallery(images) {
+      const galleryContainer = document.querySelector('.carousel');
+      images.forEach(image => {
+        const imageURL = `https://lh3.googleusercontent.com/d/${image.id}`;
+        const description = image.description ? image.description : '';
+        const formattedDescription = description ? description.replace(/,/g, '<br>') : '';
+        const imageTemplate = `
+          <div class="carousel__slide">
+            <a class="flex flex-wrap justify-center text-align-center content-center" href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
+              <img src="${imageURL}" alt="${image.name}"/>
+            </a>
+            <div class="carousel__caption">${formattedDescription}</div>
+          </div>`;
+        galleryContainer.innerHTML += imageTemplate;
+      });
+      const carousel = new Carousel(document.querySelector('.carousel'), {
+        initialSlide: 2,
+        slidesPerPage: 1,
+        infinite: true,
+        adaptiveHeight: true,
+      });
+      Fancybox.bind('[data-fancybox="gallery"]', {
+      });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchImagesFromGoogleDrive().then(images => {
+        generateGallery(images);
+      });
+    });
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        document.querySelector('.carousel').innerHTML = '';
+        fetchImagesFromGoogleDrive().then(images => {
+          generateGallery(images);
+        });
+      }
+    });
   </script>
   <script src="style/fade_in.js"></script>
   <script src="style/menu.js"></script>

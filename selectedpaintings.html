@@ -24,53 +24,40 @@
   <!-- Start - Fancybox Scripts -->
   <!-- Fancybox CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-  <!-- Carousel CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/carousel.css" />
-  <!-- Fancybox and Carousel JS -->
+  <!-- Fancybox JS -->
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/carousel.umd.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <!-- End - Fancybox Scripts -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    #myCarouselContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: visible;
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15%;
     }
-    #myCarouselContainer .carousel {
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 100px;
+      align-items: center;
+    }
+    .gallery__item img {
       width: 100%;
-      height: auto;
-      justify-content: center;
-      align-items: center;
+      height: 10%;
+      display: block;
     }
-    #myCarouselContainer .carousel__slide {
-      width: calc(100% / 3);;
+    .gallery__caption {
+      margin-top: 5px;
       text-align: center;
-      align-content: center;
+      font-size: 0.9rem;
+      color: #333;
     }
-    #myCarouselContainer  img {
-      vertical-align: top;
-      justify-content: center;
-      align-items: center;
-      height: auto;
-      max-height: 625px;
-    }
-    .carousel__button {
-      width: 48px;
-      height: 48px;
-      padding: 0;
-      border-radius: 50;
-      --carousel-button-bg: #cabebeab;
-      --carousel-button-color: #0000009a;
-      --carousel-button-svg-stroke-width: 2.5;
-      --carousel-button-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 330, 0, 0.1) 0px 4px 6px -1px,
-        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-        }
     @media (max-width: 767px) {
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 5rem;
+      }
       #name-title {
         font-size: medium;
       }
@@ -80,14 +67,6 @@
       }
       #ul-item {
         font-size: small;
-      }
-      #myCarouselContainer .carousel__slide {
-        width: calc(100% / 1);;
-      }
-      #myCarouselContainer  img {
-        justify-content: center;
-        align-items: center;
-        height: 300px;
       }
     }
     @media (min-width: 768px){
@@ -148,17 +127,14 @@
       </div>
     </nav>
   </header>
-  <div class="display: flex; justify-content: center;" height="100vh" width="100%">
-    <h1 id="page-title" class="text-xs" style="padding-left: 20px;">SELECTED PAINTINGS</h1>
-    <section class="mycontainer">
-      <div class="my-carousel-container" id="myCarouselContainer">
-        <div class="carousel">            
-        </div>              
+  <h1 id="page-title" class="text-xs" style="padding-left: 20px;">SELECTED PAINTINGS</h1>
+  <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
+    <div class="gallery-container">
+      <div class="gallery">
       </div>
-    </section>
-  </div>
-  <footer style="padding-top: 50px">
-    <div class="max-w-screen-xl py-16 mx-auto align-items-bottom">
+    </div>
+  <footer>
+    <div class="max-w-screen-xl py-16 mx-auto">
       <div class="grid grid-cols-1 gap-8 text-center mx-auto">
         <div>
           <div class="flex mx-auto">
@@ -176,7 +152,7 @@
         </div>
       </div>
       <p class="mt-8 text-xs text-gray-600 dark:text-gray-300 text-center">
-        Copyright © Ellie Walker<br/>Created by Ross Montgomery
+        Copyright © Ellie Walker<br/>
       </p>
     </div>
   </footer>
@@ -185,49 +161,53 @@
     const FOLDER_ID = '1xLfph_Brc55Beoh7N61x4H9NSwfF0Htq';
 
     async function fetchImagesFromGoogleDrive() {
-      const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description,createdTime)`;
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      return data.files
-        .filter(file => file.mimeType.startsWith('image/'))
-        ; 
-    }
-    function generateGallery(images) {
-      const galleryContainer = document.querySelector('.carousel');
-      images.forEach(image => {
-        const imageURL = `https://lh3.googleusercontent.com/d/${image.id}`;
-        const description = image.description ? image.description : '';
-        const formattedDescription = description ? description.replace(/,/g, '<br>') : '';
-        const imageTemplate = `
-          <div class="carousel__slide">
-            <a class="flex flex-wrap justify-center text-align-center content-center" href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
-              <img src="${imageURL}" alt="${image.name}"/>
-            </a>
-            <div class="carousel__caption">${formattedDescription}</div>
-          </div>`;
-        galleryContainer.innerHTML += imageTemplate;
-      });
-      const carousel = new Carousel(document.querySelector('.carousel'), {
-        initialSlide: 2,
-        slidesPerPage: 1,
-        infinite: true,
-        adaptiveHeight: true,
-      });
-      Fancybox.bind('[data-fancybox="gallery"]', {
-      });
-    }
+            const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description,createdTime)`;
+            const response = await fetch(endpoint);
+            const data = await response.json();
+
+            return data.files
+                .filter(file => file.mimeType.startsWith('image/'))
+                .sort((a, b) => {
+                    const numA = parseInt(a.name.match(/\d+/)?.[0] || "0", 10);
+                    const numB = parseInt(b.name.match(/\d+/)?.[0] || "0", 10);
+                    return numB - numA; 
+                });
+        }
+
+        function generateGallery(images) {
+            const galleryContainer = document.querySelector('.gallery');
+            galleryContainer.innerHTML = "";
+
+            images.forEach(image => {
+                const imageURL = `https://lh3.googleusercontent.com/d/${image.id}`;
+                const description = image.description || "";
+                const formattedDescription = description.replace(/,/g, '<br>');
+                const imageTemplate = `
+                    <div class="gallery__item">
+                        <a href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
+                            <img src="${imageURL}" alt="${description}" />
+                        </a>
+                    </div>`;
+                galleryContainer.innerHTML += imageTemplate;
+            });
+            Fancybox.bind('[data-fancybox="gallery"]', {
+                Toolbar: {
+                    display: ["close"],
+                },
+                Thumbs: {
+                  autoStart: false,
+                },
+            });
+        }
+
+        async function initGallery() {
+            const images = await fetchImagesFromGoogleDrive();
+            generateGallery(images);
+        }
     document.addEventListener('DOMContentLoaded', function() {
       fetchImagesFromGoogleDrive().then(images => {
         generateGallery(images);
       });
-    });
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted) {
-        document.querySelector('.carousel').innerHTML = '';
-        fetchImagesFromGoogleDrive().then(images => {
-          generateGallery(images);
-        });
-      }
     });
   </script>
   <script src="style/fade_in.js"></script>
