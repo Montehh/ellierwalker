@@ -213,13 +213,8 @@
         } else {
           console.error('Avatar image not found in the folder.');
         }
-        if (cv) {
-          const cvUrl = `https://drive.google.com/uc?id=${cv.id}&export=download`;
-          const buttonHTML = `<br/><br/><br/><br/><button class="btn default text-base"><a href="${cvUrl}" target="_blank" rel="noopener noreferrer">CV</a></button><br/><br/>`;
-          document.getElementById('avatar-description').insertAdjacentHTML('beforeend', buttonHTML);
-        } else {
-          console.error('CV file not found in the folder.');
-        }
+        const buttonHTML = `<br/><br/><br/><br/><button class="btn default text-base"><a href="cv.html" target="_blank" rel="noopener noreferrer">CV</a></button><br/><br/>`;
+        document.getElementById('avatar-description').insertAdjacentHTML('beforeend', buttonHTML);
       } catch (error) {
         console.error('Error fetching avatar image:', error);
       }
