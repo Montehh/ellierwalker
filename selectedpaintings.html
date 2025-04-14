@@ -54,6 +54,10 @@
       font-size: 0.9rem;
       color: #333;
     }
+    .fancybox__caption {
+      text-align: center !important;
+      width: 100%;
+    }
     @media (max-width: 767px) {
       .gallery-container {
         padding: 0 20px;
@@ -191,7 +195,7 @@
             images.forEach(image => {
                 const imageURL = `https://lh3.googleusercontent.com/d/${image.id}`;
                 const description = image.description || "";
-                const formattedDescription = description.replace(/,/g, '<br>');
+                const formattedDescription = description.replace(/\//g, '<br>');
                 const imageTemplate = `
                     <div class="gallery__item">
                         <a href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
