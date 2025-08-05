@@ -34,7 +34,6 @@
     body {
       margin: 0;
       height: 100vh;
-      background-image: url('images/IMG_0536.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -140,6 +139,30 @@
       </p>
     </div>
   </footer>
+  <script>
+    const API_KEY = 'AIzaSyA6_KkOsKxkYsE23M2xOhfghpApQV4pojI';
+    const FOLDER_ID = '1-WiMoYxr4_vjMWfgdP5IfcuQDmtuaJP2';
+  
+    async function fetchTitleImage() {
+      try {
+        const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,description)`;
+        const response = await fetch(endpoint);
+        const data = await response.json();
+  
+        const avatar = data.files.find(file => file.name === 'Title_image.jpg');
+        if (avatar) {
+          const imageUrl = `https://lh3.googleusercontent.com/d/${avatar.id}`;
+          
+          document.body.style.backgroundImage = `url('${imageUrl}')`;
+        } else {
+          console.error('Avatar image not found in the folder.');
+        }
+      } catch (error) {
+        console.error('Error fetching avatar image:', error);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', fetchTitleImage);
+  </script>
   <script src="style/fade_in.js"></script>
   <script src="style/menu.js"></script>
 </body>
