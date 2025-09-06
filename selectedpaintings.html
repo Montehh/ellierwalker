@@ -42,11 +42,25 @@
       gap: 100px;
       place-items: center; 
     }
+    .gallery__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
     .gallery__item img {
       max-height: 80vh;
       width: auto;
       object-fit: contain;
       display: block;
+      margin: 0 auto;
+      margin-bottom: 12px;
+    }
+    .gallery__caption {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 1.4;
     }
     .gallery__caption {
       margin-top: 5px;
@@ -198,9 +212,10 @@
                 const formattedDescription = description.replace(/\//g, '<br>');
                 const imageTemplate = `
                     <div class="gallery__item">
-                        <a href="${imageURL}" data-fancybox="gallery" data-caption="${formattedDescription}">
+                        <a href="${imageURL}" data-fancybox="gallery">
                             <img src="${imageURL}" alt="${description}" />
                         </a>
+                        <div class="gallery__caption">${formattedDescription}</div>
                     </div>`;
                 galleryContainer.innerHTML += imageTemplate;
             });
