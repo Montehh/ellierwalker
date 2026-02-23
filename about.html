@@ -89,10 +89,11 @@
   </style>
 </head>
 
-<body
-  class="text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500" style="padding:0px">
-  <header class="sticky top-0 z-50 overflow-hidden bg-white dark:bg-white pt-10 pb-1">
-    <nav id="nav" x-data="{ open: false }" role="navigation" class="w-full">
+<body x-data="{ open: false }"
+  class="text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500"
+  style="padding:0px">
+  <header class="sticky top-0 z-50 overflow-hidden md:overflow-visible bg-white dark:bg-white pt-10 pb-1">
+    <nav id="nav" role="navigation" class="w-full">
       <div class="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
           <a href="index.html" id="name-title" class="text-2xl">ELLIE WALKER</a>
@@ -119,24 +120,56 @@
           class="w-full h-0 transition-all ease-out duration-500 md:transition-none md:w-auto md:flex-grow md:flex md:items-center">
           <ul id="ulMenu"
             class="flex flex-col duration-300 ease-out md:space-x-5 sm:transition-none mt-5 md:flex-row md:items-center md:ml-auto md:mt-0 md:pt-0 md:border-0">
-            <li class="group transition duration-300">
-              <a id="ul-item" href="selectedpaintings.html" class="text-base tap-highlight-transparent">SELECTED PAINTINGS
-                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>                
+            <li class="relative group" x-data="{ dropdown: false }" @click.outside="dropdown = false">
+              <a id="ul-item" href="selectedpaintings_2026.html" 
+                class="text-base md:hidden">
+                SELECTED PAINTINGS
               </a>
+              <a id="ul-item" href="#" class="hidden md:block text-base tap-highlight-transparent"
+                @click.prevent="dropdown = !dropdown">SELECTED PAINTINGS
+                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
+              </a>
+              <div x-show="dropdown" class="hidden md:block dropdown md:absolute md:left-0 right-0 md:mt-2" x-transition
+                class="absolute mt-2 py-2 z-50" style="display: none;">
+                <a href="selectedpaintings_2026.html"
+                  class="block py-2 md:py-2 px-3 md:px-0 text-sm md:text-base md:text-right relative transition">
+                  <span
+                    class="inline-block relative fter:content-[''] after:absolute after:-bottom-1 after:right-0 after:h-0.5 after:bg-black after:w-0 after:transition-all after:duration-300 hover:after:w-full">
+                    2026
+                  </span>
+                </a>
+                <a href="selectedpaintings_2025.html"
+                  class="block py-2 md:py-2 px-3 md:px-0 text-sm md:text-base md:text-right relative transition">
+                  <span
+                    class="inline-block relative fter:content-[''] after:absolute after:-bottom-1 after:right-0 after:h-0.5 after:bg-black after:w-0 after:transition-all after:duration-300 hover:after:w-full">
+                    2025
+                  </span>
+                </a>
+                <a href="selectedpaintings_2024.html"
+                  class="block py-2 md:py-2 px-3 md:px-0 text-sm md:text-base md:text-right relative transition">
+                  <span
+                    class="inline-block relative fter:content-[''] after:absolute after:-bottom-1 after:right-0 after:h-0.5 after:bg-black after:w-0 after:transition-all after:duration-300 hover:after:w-full">
+                    2024
+                  </span>
+                </a>
+              </div>
             </li>
             <li class="group transition duration-300">
               <a id="ul-item" href="installs.html" class="text-base tap-highlight-transparent">INSTALLS
-                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
+                <span
+                  class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
             <li class="group transition duration-300">
               <a id="ul-item" href="worksonpaper.html" class="text-base tap-highlight-transparent">WORKS ON PAPER
-                <span class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
+                <span
+                  class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
             <li class="group transition duration-300">
               <a id="ul-item" href="about.html" class="text-base tap-highlight-transparent">ABOUT
-                <span class="hidden md:block h-0.5 bg-black dark:bg-black"></span>
+                <span
+                  class="hidden md:block h-0.5 bg-black dark:bg-black"></span>
               </a>
             </li>
           </ul>
@@ -144,8 +177,14 @@
       </div>
     </nav>
   </header>
-  <h1 id="page-title" class="text-xs" style="padding-left: 20px;">ABOUT</h1>
-  <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
+    <div id="ul-item" :class="open 
+          ? 'opacity-0 -translate-y-2 pointer-events-none' 
+          : 'opacity-100 translate-y-0'"
+      class="text-sm pl-5 md:hidden transition-all duration-250 ease-in-out font-poppins">
+      ABOUT
+      <div class="md:hidden flex justify-evenly w-full px-5 pt-8 pb-8"></div>
+    </div>
+   <div id="ul-item" class="hidden md:flex w-full text-base justify-center pt-8 pb-8"></div>
   <div class="about-content">
     <div class="about-container">
       <div class="about-item">
