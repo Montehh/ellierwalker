@@ -12,116 +12,230 @@
   <link rel="icon" type="image/x-icon" href="images/IMG_0536.jpg" />
   <link rel="stylesheet" href="style/output.css" />
 
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   <!-- Start - Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
   <!-- End - Fonts -->
-  
+
   <!-- Start - Fancybox Scripts -->
   <!-- Fancybox CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
   <!-- Fancybox JS -->
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <!-- End - Fancybox Scripts -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    .default {color: black;}
-    .about-content {
+    .btn:hover {
+      text-decoration: underline;
+    }
+
+    .default {
+      color: black;
+    }
+
+    .cv-wrapper {
       display: flex;
       width: 100%;
       justify-content: center;
     }
-    .about-container {
+
+    .cv-container {
       display: flex;
       width: 90%;
       justify-content: center;
     }
-    .about-item {
+
+    .cv-item {
       display: flex;
       width: 100%;
-      height: 75vh;
-      text-align: center;
-      /* align-items: center; */
+      align-items: center;
       justify-content: center;
       padding-left: 2.5%;
       padding-right: 2.5%;
     }
-    .about-item img {
-      display: flex;
-      max-height: 90%;
-      width: auto;
+
+    #cv-content {
+      width: 100%;
+      line-height: 1.85;
+      color: black;
     }
+
+    #cv-content,
+    #cv-content * {
+      font-family: 'Poppins', sans-serif !important;
+      font-size: inherit !important;
+      color: black !important;
+    }
+
     @media (max-width: 767px) {
       #name-title {
         font-size: medium;
       }
+
       #nav {
         padding-left: 20px;
         padding-right: 20px;
       }
+
       #ul-item {
         font-size: small;
       }
-      .about-container {
+
+      .cv-container {
         display: block;
-        width: 90%; 
+        width: 90%;
       }
-      .about-item {
+
+      .cv-item {
         padding-top: 0;
         padding-bottom: 15%;
         height: auto;
       }
     }
-    @media (min-width: 768px){
+
+    @media (min-width: 768px) {
       #page-title {
         display: none;
       }
     }
-
   </style>
 </head>
 
-<body
-  class="text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500" style="padding:0px">
-  <header class="sticky top-0 z-50 overflow-hidden bg-white dark:bg-white pt-10 pb-1">
-    <nav id="nav" x-data="{ open: false }" role="navigation" class="w-full">
+<body x-data="{ open: false }"
+  class="text-black dark:text-black px-5 md:px-20 opacity-0 animate-fade-in transition duration-500"
+  style="padding:0px">
+  <header class="sticky top-0 z-50 overflow-hidden md:overflow-visible bg-white dark:bg-white pt-10 pb-1">
+    <nav id="nav" role="navigation" class="w-full">
       <div class="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
           <a href="index.html" id="name-title" class="text-2xl">ELLIE WALKER</a>
+        </div>
+        <div class="ml-auto md:hidden flex items-center justify-start">
+          <button onclick="menuToggle()" @click="open = !open"
+            class="tap-highlight-transparent text-black dark:text-black w-5 h-5 relative focus:outline-none"
+            @click="open = !open">
+            <span class="sr-only"></span>
+            <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <span aria-hidden="true"
+                class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
+                :class="{'rotate-45': open,' -translate-y-1.5': !open }"></span>
+              <span aria-hidden="true"
+                class="block absolute  h-0.5 w-5 bg-current   transform transition duration-500 ease-in-out"
+                :class="{'opacity-0': open } "></span>
+              <span aria-hidden="true"
+                class="block absolute h-0.5 w-5 bg-current transform  transition duration-500 ease-in-out"
+                :class="{'-rotate-45': open, ' translate-y-1.5': !open}"></span>
+            </div>
+          </button>
+        </div>
+        <div id="menu"
+          class="w-full h-0 transition-all ease-out duration-500 md:transition-none md:w-auto md:flex-grow md:flex md:items-center">
+          <ul id="ulMenu"
+            class="flex flex-col duration-300 ease-out md:space-x-5 sm:transition-none mt-5 md:flex-row md:items-center md:ml-auto md:mt-0 md:pt-0 md:border-0">
+            <li class="relative group" x-data="{ dropdown: false }" @click.outside="dropdown = false">
+              <a id="ul-item" href="selectedpaintings_2026.html" class="text-base md:hidden">
+                SELECTED PAINTINGS
+              </a>
+              <a id="ul-item" href="#" class="hidden md:block text-base tap-highlight-transparent"
+                @click.prevent="dropdown = !dropdown">SELECTED PAINTINGS
+                <span
+                  class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
+              </a>
+              <div x-show="dropdown" class="hidden md:block dropdown md:absolute md:left-0 right-0 md:mt-2" x-transition
+                class="absolute mt-2 py-2 z-50" style="display: none;">
+                <a href="selectedpaintings_2026.html"
+                  class="block py-2 md:py-2 px-3 md:px-0 text-sm md:text-base md:text-right relative transition">
+                  <span
+                    class="inline-block relative fter:content-[''] after:absolute after:-bottom-1 after:right-0 after:h-0.5 after:bg-black after:w-0 after:transition-all after:duration-300 hover:after:w-full">
+                    2026
+                  </span>
+                </a>
+                <a href="selectedpaintings_2025.html"
+                  class="block py-2 md:py-2 px-3 md:px-0 text-sm md:text-base md:text-right relative transition">
+                  <span
+                    class="inline-block relative fter:content-[''] after:absolute after:-bottom-1 after:right-0 after:h-0.5 after:bg-black after:w-0 after:transition-all after:duration-300 hover:after:w-full">
+                    2025
+                  </span>
+                </a>
+                <a href="selectedpaintings_2024.html"
+                  class="block py-2 md:py-2 px-3 md:px-0 text-sm md:text-base md:text-right relative transition">
+                  <span
+                    class="inline-block relative fter:content-[''] after:absolute after:-bottom-1 after:right-0 after:h-0.5 after:bg-black after:w-0 after:transition-all after:duration-300 hover:after:w-full">
+                    2024
+                  </span>
+                </a>
+              </div>
+            </li>
+            <li class="group transition duration-300">
+              <a id="ul-item" href="installs.html" class="text-base tap-highlight-transparent">INSTALLS
+                <span
+                  class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
+              </a>
+            </li>
+            <li class="group transition duration-300">
+              <a id="ul-item" href="worksonpaper.html" class="text-base tap-highlight-transparent">WORKS ON PAPER
+                <span
+                  class="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-black"></span>
+              </a>
+            </li>
+            <li class="group transition duration-300">
+              <a id="ul-item" href="about.html" class="text-base tap-highlight-transparent">ABOUT
+                <span class="hidden md:block h-0.5 bg-black dark:bg-black"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   </header>
-  <h1 id="page-title" class="text-xs" style="padding-left: 20px;"></h1>
-  <h1 class="text-4xl pt-10 pb-8 font-bold"></h1>
-  <div class="about-content">
-    <div class="about-container">
-        <div class="about-item">
-            <div id="avatar-description" class="font-sans text-2xl leading-relaxed"></div>
+  <div id="ul-item" :class="open 
+          ? 'opacity-0 -translate-y-2 pointer-events-none' 
+          : 'opacity-100 translate-y-0'"
+    class="text-sm pl-5 md:hidden transition-all duration-250 ease-in-out font-poppins">
+    ABOUT
+    <div class="md:hidden flex justify-evenly w-full px-5 pt-8 pb-8"></div>
+  </div>
+  <div id="ul-item" class="hidden md:flex w-full text-base justify-center pt-8 pb-8"></div>
+  <div class="cv-wrapper">
+    <div class="cv-container">
+      <div class="cv-item">
+        <div id="cv-content" class="text-base">
+          Loading CV...
         </div>
+      </div>
     </div>
   </div>
-</div>
+  </div>
+  </div>
   <footer style="padding-top: 50px">
     <div class="max-w-screen-xl py-16 mx-auto align-items-bottom">
       <div class="grid grid-cols-1 gap-8 text-center mx-auto">
         <div>
           <div class="flex mx-auto">
             <div class="mx-auto space-x-6 flex mt-8 text-gray-600 dark:text-gray-300">
-              <a class="transition duration-300 hover:opacity-75" href="https://www.instagram.com/ellierwalker" target="_blank"
-                rel="noreferrer">
+              <a class="transition duration-300 hover:opacity-75" href="https://www.instagram.com/ellierwalker"
+                target="_blank" rel="noreferrer">
                 <span class="sr-only"> Instagram </span>
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                   <path
                     d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
                 </svg>
               </a>
-              <a class="transition duration-300 hover:opacity-75" href="mailto:elliewalkerstudio@gmail.com" target="_blank" rel="noreferrer">
+              <a class="transition duration-300 hover:opacity-75" href="mailto:elliewalkerstudio@gmail.com"
+                target="_blank" rel="noreferrer">
                 <span class="sr-only">Email</span>
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 4v10h16V8l-8 5-8-5zm0-2 8 5 8-5H4z" />
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 4v10h16V8l-8 5-8-5zm0-2 8 5 8-5H4z" />
                 </svg>
               </a>
             </div>
@@ -129,53 +243,63 @@
         </div>
       </div>
       <p class="mt-8 text-xs text-gray-600 dark:text-gray-300 text-center">
-        Copyright © Ellie Walker<br/>
+        Copyright © Ellie Walker<br />
       </p>
     </div>
   </footer>
-    <script>
-        const API_KEY = 'AIzaSyA6_KkOsKxkYsE23M2xOhfghpApQV4pojI';
-        const FOLDER_ID = '1-WiMoYxr4_vjMWfgdP5IfcuQDmtuaJP2';
-        async function fetchGoogleDocContent() {
-            try {
-                const endpoint = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType)`;
-                const response = await fetch(endpoint);
-                const data = await response.json();
-                const googleDoc = data.files.find(file => file.mimeType === 'application/vnd.google-apps.document');
-                if (googleDoc) {
-                    const docUrl = `https://docs.google.com/document/d/${googleDoc.id}/export?format=html`;
-                    fetchAndDisplayContent(docUrl);
-                } else {
-                    console.error('Google Doc file not found.');
-                }
-            } catch (error) {
-                console.error('Error fetching Google Doc:', error);
-            }
-        }
-        async function fetchAndDisplayContent(docUrl) {
-            try {
-                const response = await fetch(docUrl);
-                let htmlContent = await response.text();
-                let tempDiv = document.createElement("div");
-                tempDiv.innerHTML = htmlContent;
-                tempDiv.querySelectorAll("[style]").forEach(el => el.removeAttribute("style"));
-                tempDiv.querySelectorAll("font").forEach(el => {
-                    el.replaceWith(...el.childNodes);
-                });
-                let mainContent = tempDiv.querySelector("body") || tempDiv; 
-                let targetDiv = document.getElementById("avatar-description");
-                targetDiv.innerHTML = mainContent.innerHTML;
-                targetDiv.style.fontFamily = "Poppins, sans-serif";
-                targetDiv.style.fontSize = "1.5rem";
-                targetDiv.style.lineHeight = "2";
-                targetDiv.style.color = "#000";
+  <script>
 
-            } catch (error) {
-                console.error("Error fetching document content:", error);
-            }
-        }
-        document.addEventListener("DOMContentLoaded", fetchGoogleDocContent);
-    </script>
+    const DOC_ID = '1P3jWydwwwUdLvBeeLDT-PLX4FU5LH_F3ntT8LCz6Ooo';
+    async function loadCV() {
+      try {
+        const url =
+          `https://docs.google.com/document/d/${DOC_ID}/export?format=html`;
+        const response = await fetch(url);
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc =
+          parser.parseFromString(html, 'text/html');
+        const styles =
+          doc.querySelector('style')?.innerHTML || '';
+        const content = doc.body;
+        content.querySelectorAll('*').forEach(el => {
+          el.removeAttribute('id');
+        });
+        content.querySelectorAll('p').forEach(p => {
+          const text = p.textContent.trim();
+          const hasImages = p.querySelector('img');
+          if (!text && !hasImages) {
+            p.remove();
+          }
+        });
+
+        document.getElementById('cv-content').innerHTML =
+          `<style>${styles}</style>${content.innerHTML}`;
+        document.querySelectorAll('#cv-content p').forEach(p => {
+          const child = p.querySelector('span, em, i, u');
+          if (!child) return;
+          const style = window.getComputedStyle(child);
+          const isItalic =
+            style.fontStyle === 'italic';
+          const isUnderlined =
+            style.textDecorationLine.includes('underline');
+          if (isItalic && isUnderlined) {
+            p.insertAdjacentHTML('beforebegin', '<br>');
+            p.insertAdjacentHTML('afterend', '<br>');
+          }
+
+        });
+      } catch (err) {
+        console.error(err);
+        document.getElementById('cv-content').innerHTML =
+          'Failed to load CV.';
+      }
+    }
+    document.addEventListener(
+      'DOMContentLoaded',
+      loadCV
+    );
+  </script>
   <script src="style/fade_in.js"></script>
   <script src="style/menu.js"></script>
 </body>
